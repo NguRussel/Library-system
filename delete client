@@ -1,0 +1,18 @@
+def Delete_Client(self):
+        client_original_national_id = self.lineEdit_25.text()
+
+
+        warning_message = QMessageBox.warning(self , "Delete CLient" , "are you sure you want to delete this client" , QMessageBox.Yes | QMessageBox.No)
+
+        if warning_message == QMessageBox.Yes :
+
+            self.db = MySQLdb.connect(host='localhost' , user='root' , password ='toor' , db='library')
+            self.cur = self.db.cursor()
+
+            sql = ''' DELETE FROM clients WHERE client_nationalid = %s '''
+            self.cur.execute(sql , [(client_original_national_id)])
+
+            self.db.commit()
+            self.db.close()
+            self.statusBar().showMessage('CLient Deleted ')
+            self.Show_All_Clients()
